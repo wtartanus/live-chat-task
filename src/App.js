@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 
-import AppInput from './components/AppInput';
-import AppCheckbox from './components/AppCheckbox';
 import Loader from './components/Loader';
 import ErrorBanner from './components/ErrorBanner';
+import LoginSuccessful from './components/LoginSuccessful';
+import LoginForm from './components/LoginForm';
 import { signIn } from './api';
 
 import {
   EMAIL_REGEX,
   PASSWORD_REGEX,
-  INVALID_PASSWORD_ERROR,
-  INVALID_EMAIL_ERROR,
   APP_STATUS,
 } from './utils/constants';
 import './App.css';
@@ -22,24 +20,38 @@ function App() {
   const [password, setPassword] = useState('');
   const [isInvalidPassword, setIsInvalidPasswrod] = useState(false);
 
+  const handleEmailChange = (email) => {
+    setAppStatus(APP_STATUS.REGULAR);
+    setEmail(email);
+    setIsInvalidEmail(false);
+  }
+
+  const handlePasswordChange = (password) => {
+    setAppStatus(APP_STATUS.REGULAR);
+    setPassword(password);
+    setIsInvalidPasswrod(false);
+  }
+
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    let invalid = false;
     if (!email || !EMAIL_REGEX.test(email)) {
+      invalid = true;
       setIsInvalidEmail(true);
     }
 
     if (!password || !PASSWORD_REGEX.test(password)) {
+      invalid = true;
       setIsInvalidPasswrod(true);
     }
 
-    if (isInvalidEmail || isInvalidPassword) return;
+    if (invalid) return;
 
     try {
       setAppStatus(APP_STATUS.LOADING);
       await signIn(email, password);
-      setAppStatus(APP_STATUS.REGULAR);
+      setAppStatus(APP_STATUS.LOGGED);
     } catch (error) {
       setAppStatus(APP_STATUS.ERROR);
       console.log('error', error);
@@ -48,44 +60,20 @@ function App() {
 
   return (
     <div className="app">
-      <form className="login-form">
-        { appStatus === APP_STATUS.ERROR && <ErrorBanner message="Invalid email or password" />}
-        <fieldset className="login-form-fieldset">
-          {appStatus === APP_STATUS.LOADING && <Loader />}
-          <AppInput
-            value={email}
-            handleChange={(email) => {
-              setAppStatus(APP_STATUS.REGULAR);
-              setEmail(email);
-              setIsInvalidEmail(null);
-            }}
-            label="Email"
-            name="email"
-            id="email"
-            error={isInvalidEmail ? INVALID_EMAIL_ERROR : null}
-          />
-          <AppInput
-            value={password}
-            handleChange={(password) => {
-              setAppStatus(APP_STATUS.REGULAR);
-              setPassword(password);
-              setIsInvalidPasswrod(null);
-            }}
-            label="Password"
-            type="password"
-            name="password"
-            id="password"
-            error={isInvalidPassword ? INVALID_PASSWORD_ERROR : null}
-          />
-          <AppCheckbox label="Remember me" name="remember" id="remember" />
-          <input
-            onClick={handleFormSubmit}
-            type="submit"
-            value="login"
-            className="form-submit"
-          />
-        </fieldset>
-      </form>
+      { appStatus === APP_STATUS.LOGGED && <LoginSuccessful /> }
+      { appStatus === APP_STATUS.LOADING && <Loader />}
+      { appStatus === APP_STATUS.ERROR && <ErrorBanner message="Invalid email or password" /> }
+      { appStatus === APP_STATUS.REGULAR && (
+        <LoginForm 
+          email={email}
+          password={password}
+          isInvalidEmail={isInvalidEmail}
+          isInvalidPassword={isInvalidPassword}
+          handleEmailChange={handleEmailChange}
+          handlePasswordChange={handlePasswordChange}
+          handleFormSubmit={handleFormSubmit}
+        /> 
+      )}
     </div>
   );
 }

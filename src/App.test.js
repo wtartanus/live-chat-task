@@ -80,3 +80,14 @@ test('renders invalid invalid email or password if unauthorized', async () => {
 
   expect(screen.getByText(/Invalid email or password/i)).toBeInTheDocument();
 });
+
+test('renders login successful', async () => {
+  render(<App />);
+  fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'test@test.pl' } });
+  fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'Password1' } });
+
+  fireEvent.click(screen.getByText('login'));
+  await waitFor(() => screen.getByText(/Login successful/i));
+
+  expect(screen.getByText(/Login successful/i)).toBeInTheDocument();
+});

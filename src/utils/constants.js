@@ -8,4 +8,5 @@ export const APP_STATUS = Object.freeze({
   LOADING: 0,
   ERROR: 1,
   REGULAR: 2,
+  LOGGED: 3,
 });
