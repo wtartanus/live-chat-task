@@ -1,1 +1,74 @@
+body {
+  margin: 0;
+  background: deepskyblue;
+}
 
+.app {
+  width: 95%;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  padding: 2em .2em;
+  border-radius: 20px;
+  box-shadow: 3px 6px 7px rgba(0, 0, 0, .2);
+}
+
+.login-form-fieldset {
+  width: 100%;
+  border: none;
+}
+
+.app-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-input:first-of-type {
+  margin-bottom: 3em;
+}
+
+.app-input > label {
+  font-size: 1.5em;
+  margin-bottom: .2em;
+}
+
+.app-input > input {
+  padding: .6em .6em .6em 0;
+  border: none;
+  border-bottom: 1px solid;
+}
+
+.app-checkobox {
+  margin-top: .8em;
+  display: flex;
+  align-items: center;
+}
+
+.app-checkobox input {
+  margin: 0;
+}
+
+.app-checkobox label {
+  margin-left: .5em;
+}
+
+.form-submit {
+  margin-top: 3em;
+  width: 100%;
+  padding: .8em;
+  text-align: center;
+  border: none;
+  border-radius: 20px;
+  background: deepskyblue;
+  color: white;
+  text-transform: uppercase;
+}

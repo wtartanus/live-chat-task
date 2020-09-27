@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 function AppCheckbox({ label, name, id }) {
     return (
-        <>
-          <label for={name}>{label}</label>
+        <div className="app-checkobox">
           <input type="checkbox" name="remember" id={id} />
-        </>
+          <label htmlFor={name}>{label}</label>
+        </div>
     );
 };
 
