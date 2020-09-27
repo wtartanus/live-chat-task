@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './ErrorBanner.css';
+
 function ErrorBanner({ message }) {
   return (
     <div className="error-banner">

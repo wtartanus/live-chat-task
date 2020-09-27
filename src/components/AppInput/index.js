@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './AppInput.css';
+
 function AppInput({
   value,
   handleChange,
@@ -19,7 +21,7 @@ function AppInput({
             type={type}
             name={name}
             id={id}
-            className={`app-input ${error ? 'error' : ''}`}
+            className={`app-input ${error ? 'border-red' : ''}`}
           />
           {error && <span className="input-error">{error}</span> /**TODO: jumps when error shows **/} 
         </div>

@@ -1,0 +1,11 @@
+.error-banner {
+  width: 100%;
+  border: 2px solid red;
+  border-radius: 15px;
+  margin-bottom: 1em;
+}
+
+.error-banner p {
+  margin: .5em 0;
+  padding-left: .8em;
+}

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './AppCheckbox.css';
+
 function AppCheckbox({ label, name, id }) {
     return (
         <div className="app-checkobox">

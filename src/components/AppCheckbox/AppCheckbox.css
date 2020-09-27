@@ -1,0 +1,13 @@
+.app-checkobox {
+  margin-top: .8em;
+  display: flex;
+  align-items: center;
+}
+
+.app-checkobox input {
+  margin: 0;
+}
+
+.app-checkobox label {
+  margin-left: .5em;
+}

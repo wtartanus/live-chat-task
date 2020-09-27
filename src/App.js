@@ -63,7 +63,7 @@ function App() {
       { appStatus === APP_STATUS.LOGGED && <LoginSuccessful /> }
       { appStatus === APP_STATUS.LOADING && <Loader />}
       { appStatus === APP_STATUS.ERROR && <ErrorBanner message="Invalid email or password" /> }
-      { appStatus === APP_STATUS.REGULAR && (
+      { appStatus !== APP_STATUS.LOGGED && (
         <LoginForm 
           email={email}
           password={password}

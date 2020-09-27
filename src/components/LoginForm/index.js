@@ -7,6 +7,8 @@ import {
   INVALID_EMAIL_ERROR,
 } from '../../utils/constants';
 
+import './LoginForm.css';
+
 function LoginForm({
   email,
   password,
