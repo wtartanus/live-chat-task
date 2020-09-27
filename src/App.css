@@ -34,29 +34,39 @@ body {
   border: none;
 }
 
-.app-input {
+.app-input-container {
   display: flex;
   flex-direction: column;
 }
 
-.app-input:first-of-type {
+.app-input-container:first-of-type {
   margin-bottom: 3em;
 }
 
-.app-input > label {
+.app-input-container > label {
   font-size: 1.5em;
   margin-bottom: .2em;
 }
 
-.app-input > input {
+.app-input {
   padding: .6em .6em .6em 0;
   border: none;
   border-bottom: 1px solid;
 }
 
-.app-input > input:focus {
+.app-input:focus {
   outline: none;
   border-color: deepskyblue;
+}
+
+.error {
+  border-color: red;
+}
+
+.input-error {
+  color: red;
+  margin-top: .5em;
+
 }
 
 .app-checkobox {
@@ -83,4 +93,5 @@ body {
   background: deepskyblue;
   color: white;
   text-transform: uppercase;
+  cursor: pointer;
 }

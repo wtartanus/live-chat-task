@@ -11,7 +11,7 @@ function AppInput({
   error,
 }) {
     return (
-        <div className="app-input">
+        <div className="app-input-container">
           <label htmlFor={name}>{label}</label>
           <input
             value={value}
@@ -19,8 +19,9 @@ function AppInput({
             type={type}
             name={name}
             id={id}
+            className={`app-input ${error ? 'error' : ''}`}
           />
-          {error && <span>{error}</span>}
+          {error && <span className="input-error">{error}</span> /**TODO: jumps when error shows **/} 
         </div>
     );
 };

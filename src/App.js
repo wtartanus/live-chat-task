@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import AppInput from './components/AppInput';
 import AppCheckbox from './components/AppCheckbox';
+import { EMAIL_REGEX } from './utils/constants';
 import './App.css';
 
 function App() {
@@ -37,7 +38,10 @@ function App() {
         <fieldset className="login-form-fieldset">
           <AppInput
             value={email}
-            handleChange={setEmail}
+            handleChange={(email) => {
+              setEmail(email);
+              setEmailError(null);
+            }}
             label="Email"
             name="email"
             id="email"
@@ -45,7 +49,10 @@ function App() {
           />
           <AppInput
             value={password}
-            handleChange={setPassword}
+            handleChange={(password) => {
+              setPassword(password);
+              setPasswordError(null);
+            }}
             label="Password"
             type="password"
             name="password"
