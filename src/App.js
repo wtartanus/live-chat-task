@@ -2,33 +2,46 @@ import React, { useState } from 'react';
 
 import AppInput from './components/AppInput';
 import AppCheckbox from './components/AppCheckbox';
-import { EMAIL_REGEX } from './utils/constants';
+import Loader from './components/Loader';
+import { signIn } from './api';
+
+import {
+  EMAIL_REGEX,
+  PASSWORD_REGEX,
+  INVALID_PASSWORD_ERROR,
+  INVALID_EMAIL_ERROR,
+  APP_STATUS,
+} from './utils/constants';
 import './App.css';
 
 function App() {
+  const [appStatus, setAppStatus] = useState(APP_STATUS.REGULAR);
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState(null);
+  const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [isInvalidPassword, setIsInvalidPasswrod] = useState(false);
 
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    if (!email) {
-      setEmailError('Invalid email');
+    if (!email || !EMAIL_REGEX.test(email)) {
+      setIsInvalidEmail(true);
     }
 
-    if (!password) {
-      setPasswordError('Invalid password');
+    if (!password || !PASSWORD_REGEX.test(password)) {
+      setIsInvalidPasswrod(true);
     }
 
-    if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
-      setEmailError('Invalid email');
-    }
+    if (isInvalidEmail || isInvalidPassword) return;
 
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password)) {
-      setPasswordError('Invalid password');
+    try {
+      setAppStatus(APP_STATUS.LOADING);
+      await signIn(email, password);
+      setAppStatus(APP_STATUS.REGULAR);
+    } catch (error) {
+      setAppStatus(APP_STATUS.ERROR);
+      console.log('error', error);
     }
   }
 
@@ -36,28 +49,29 @@ function App() {
     <div className="app">
       <form className="login-form">
         <fieldset className="login-form-fieldset">
+          {appStatus === APP_STATUS.LOADING && <Loader />}
           <AppInput
             value={email}
             handleChange={(email) => {
               setEmail(email);
-              setEmailError(null);
+              setIsInvalidEmail(null);
             }}
             label="Email"
             name="email"
             id="email"
-            error={emailError}
+            error={isInvalidEmail ? INVALID_EMAIL_ERROR : null}
           />
           <AppInput
             value={password}
             handleChange={(password) => {
               setPassword(password);
-              setPasswordError(null);
+              setIsInvalidPasswrod(null);
             }}
             label="Password"
             type="password"
             name="password"
             id="password"
-            error={passwordError}
+            error={isInvalidPassword ? INVALID_PASSWORD_ERROR : null}
           />
           <AppCheckbox label="Remember me" name="remember" id="remember" />
           <input
