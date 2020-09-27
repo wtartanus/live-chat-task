@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import AppInput from './components/AppInput';
 import AppCheckbox from './components/AppCheckbox';
 import Loader from './components/Loader';
+import ErrorBanner from './components/ErrorBanner';
 import { signIn } from './api';
 
 import {
@@ -48,11 +49,13 @@ function App() {
   return (
     <div className="app">
       <form className="login-form">
+        { appStatus === APP_STATUS.ERROR && <ErrorBanner message="Invalid email or password" />}
         <fieldset className="login-form-fieldset">
           {appStatus === APP_STATUS.LOADING && <Loader />}
           <AppInput
             value={email}
             handleChange={(email) => {
+              setAppStatus(APP_STATUS.REGULAR);
               setEmail(email);
               setIsInvalidEmail(null);
             }}
@@ -64,6 +67,7 @@ function App() {
           <AppInput
             value={password}
             handleChange={(password) => {
+              setAppStatus(APP_STATUS.REGULAR);
               setPassword(password);
               setIsInvalidPasswrod(null);
             }}

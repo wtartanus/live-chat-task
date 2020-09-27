@@ -69,3 +69,14 @@ test('renders invalid password error if password doesn\'t have at list one small
   fireEvent.click(screen.getByText('login'));
   expect(screen.getByText(/Invalid password/i)).toBeInTheDocument();
 });
+
+test('renders invalid invalid email or password if unauthorized', async () => {
+  render(<App />);
+  fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'test@test.pl' } });
+  fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'Test1Test1' } });
+
+  fireEvent.click(screen.getByText('login'));
+  await waitFor(() => screen.getByText(/Invalid email or password/i));
+
+  expect(screen.getByText(/Invalid email or password/i)).toBeInTheDocument();
+});
