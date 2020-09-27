@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AppInput from './components/AppInput';
+import AppCheckbox from './components/AppCheckbox';
 import './App.css';
 
 function App() {
@@ -8,10 +9,9 @@ function App() {
     <div className="App">
       <form>
         <fieldset>
-          <AppInput label="Email" name="email" id="email" />
-          <AppInput label="Password" name="password" id="password" />
-          <label for="remember">Remember me</label>
-          <input type="checkbox" name="remember" id="remember" />
+          <AppInput label="Email" type="email" name="email" id="email" />
+          <AppInput label="Password" type="password" name="password" id="password" />
+          <AppCheckbox label="Remember me" name="remember" id="remember" />
           <input type="submit" value="login" />
         </fieldset>
       </form>
