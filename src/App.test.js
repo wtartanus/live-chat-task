@@ -16,14 +16,14 @@ test('renders invalid password error if password is not provided', () => {
 
 test('renders invalid email error if email is missing @', () => {
   render(<App />);
-  fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'testtest.com' } })
+  fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'testtest.com' } });
   fireEvent.click(screen.getByText('login'));
   expect(screen.getByText(/Invalid email/i)).toBeInTheDocument();
 });
 
 test('renders invalid email error if email is missing .domain', () => {
   render(<App />);
-  fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'test@test' } })
+  fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'test@test' } });
   fireEvent.click(screen.getByText('login'));
   expect(screen.getByText(/Invalid email/i)).toBeInTheDocument();
 });

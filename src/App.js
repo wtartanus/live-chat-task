@@ -32,26 +32,29 @@ function App() {
     setIsInvalidPasswrod(false);
   }
 
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    let invalid = false;
+  const proccessValuesValidation = () => {
+    let valid = true;
     if (!email || !EMAIL_REGEX.test(email)) {
-      invalid = true;
+      valid = true;
       setIsInvalidEmail(true);
     }
 
     if (!password || !PASSWORD_REGEX.test(password)) {
-      invalid = true;
+      valid = true;
       setIsInvalidPasswrod(true);
     }
+    return valid;
+  }
 
-    if (invalid) return;
 
+  const handleFormSubmit = async (event) => {
     try {
-      setAppStatus(APP_STATUS.LOADING);
-      await signIn(email, password);
-      setAppStatus(APP_STATUS.LOGGED);
+      event.preventDefault();
+      if (proccessValuesValidation()) {
+          setAppStatus(APP_STATUS.LOADING);
+          await signIn(email, password);
+          setAppStatus(APP_STATUS.LOGGED);
+      };
     } catch (error) {
       setAppStatus(APP_STATUS.ERROR);
       console.log('error', error);
