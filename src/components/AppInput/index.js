@@ -23,13 +23,17 @@ function AppInput({
             id={id}
             className={`app-input ${error ? 'border-red' : ''}`}
           />
-          {error && <span className="input-error">{error}</span> /**TODO: jumps when error shows **/} 
+          <span
+            className={`input-error ${!error ? 'hide' : ''}`}
+          >
+            {error}
+          </span>
         </div>
     );
 };
 
 AppInput.propTypes = {
-  value: PropTypes.string, //TODO: It can be a number?
+  value: PropTypes.string,
   handleChange: PropTypes.func,
   label: PropTypes.string,
   type: PropTypes.string,

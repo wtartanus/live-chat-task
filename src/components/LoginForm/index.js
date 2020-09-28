@@ -12,8 +12,10 @@ import './LoginForm.css';
 function LoginForm({
   email,
   password,
+  rememberMe,
   handleFormSubmit,
   handleEmailChange,
+  handleRememberMeChange,
   handlePasswordChange,
   isInvalidEmail,
   isInvalidPassword,
@@ -38,7 +40,13 @@ function LoginForm({
           id="password"
           error={isInvalidPassword ? INVALID_PASSWORD_ERROR : null}
         />
-        <AppCheckbox label="Remember me" name="remember" id="remember" />
+        <AppCheckbox
+          checked={rememberMe}
+          handleChange={handleRememberMeChange}
+          label="Remember me"
+          name="remember"
+          id="remember"
+        />
         <input
           onClick={handleFormSubmit}
           type="submit"
@@ -49,5 +57,5 @@ function LoginForm({
     </form>
   );
 }
-
+//TODO: add props validation
 export default LoginForm;

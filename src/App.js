@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Loader from './components/Loader';
 import ErrorBanner from './components/ErrorBanner';
@@ -10,6 +10,7 @@ import {
   EMAIL_REGEX,
   PASSWORD_REGEX,
   APP_STATUS,
+  UNAUTHORIZED_ERROR,
 } from './utils/constants';
 import './App.css';
 
@@ -19,6 +20,18 @@ function App() {
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [password, setPassword] = useState('');
   const [isInvalidPassword, setIsInvalidPasswrod] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
+
+    if (username && password) {
+      setEmail(username);
+      setPassword(password);
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleEmailChange = (email) => {
     setAppStatus(APP_STATUS.REGULAR);
@@ -35,14 +48,15 @@ function App() {
   const proccessValuesValidation = () => {
     let valid = true;
     if (!email || !EMAIL_REGEX.test(email)) {
-      valid = true;
+      valid = false;
       setIsInvalidEmail(true);
     }
 
     if (!password || !PASSWORD_REGEX.test(password)) {
-      valid = true;
+      valid = false;
       setIsInvalidPasswrod(true);
     }
+
     return valid;
   }
 
@@ -50,6 +64,13 @@ function App() {
   const handleFormSubmit = async (event) => {
     try {
       event.preventDefault();
+      if (rememberMe) {
+        localStorage.setItem('username', email);
+        localStorage.setItem('password', password);
+      } else {
+        localStorage.clear();
+      }
+
       if (proccessValuesValidation()) {
           setAppStatus(APP_STATUS.LOADING);
           await signIn(email, password);
@@ -57,7 +78,6 @@ function App() {
       };
     } catch (error) {
       setAppStatus(APP_STATUS.ERROR);
-      console.log('error', error);
     }
   }
 
@@ -65,15 +85,17 @@ function App() {
     <div className="app">
       { appStatus === APP_STATUS.LOGGED && <LoginSuccessful /> }
       { appStatus === APP_STATUS.LOADING && <Loader />}
-      { appStatus === APP_STATUS.ERROR && <ErrorBanner message="Invalid email or password" /> }
+      { appStatus === APP_STATUS.ERROR && <ErrorBanner message={UNAUTHORIZED_ERROR} /> }
       { appStatus !== APP_STATUS.LOGGED && (
         <LoginForm 
           email={email}
           password={password}
+          rememberMe={rememberMe}
           isInvalidEmail={isInvalidEmail}
           isInvalidPassword={isInvalidPassword}
           handleEmailChange={handleEmailChange}
           handlePasswordChange={handlePasswordChange}
+          handleRememberMeChange={(value) => setRememberMe(value)}
           handleFormSubmit={handleFormSubmit}
         /> 
       )}

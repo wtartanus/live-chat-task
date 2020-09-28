@@ -1,8 +1,9 @@
 .error-banner {
-  width: 100%;
+  position: absolute;
+  width: 90%;
+  top: 3%;
   border: 2px solid red;
   border-radius: 15px;
-  margin-bottom: 1em;
 }
 
 .error-banner p {

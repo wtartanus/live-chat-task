@@ -3,6 +3,7 @@ export const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
 export const INVALID_PASSWORD_ERROR = 'Invalid password';
 export const INVALID_EMAIL_ERROR = 'Invalid email';
+export const UNAUTHORIZED_ERROR = 'Invalid email or password';
 
 export const APP_STATUS = Object.freeze({
   LOADING: 0,

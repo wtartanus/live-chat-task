@@ -1,8 +1,9 @@
 .login-form {
-  display: flex;
+  display:-webkit-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
   
 .login-form-fieldset {

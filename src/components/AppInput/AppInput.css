@@ -4,7 +4,7 @@
 }
   
 .app-input-container:first-of-type {
-  margin-bottom: 3em;
+  margin-bottom: 2em;
 }
   
 .app-input-container > label {
@@ -26,4 +26,5 @@
 .input-error {
   color: red;
   margin-top: .5em;
+  min-height: 18px;
 }
